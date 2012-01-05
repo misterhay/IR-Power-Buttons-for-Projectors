@@ -1,0 +1,3 @@
+What we're trying to do is have two arcade buttons (momentary switches) mounted to the desk. Using the cables that lead to the IR transmitters behind each projector, the microcontroller would send the appropriate IR codes for the power buttons.
+
+Check the wiki for more information.
