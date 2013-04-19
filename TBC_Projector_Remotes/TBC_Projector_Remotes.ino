@@ -1,4 +1,8 @@
 #include <IRremote.h>
+/* you need to comment out two lines in energia\hardware\msp430\libraries\IRremote\IRremote.cpp:
+//  pinMode(TIMER_PWM_PIN, OUTPUT);
+//  digitalWrite(TIMER_PWM_PIN, LOW); // When not sending PWM, we want it low
+
 #include <Bounce.h>
 
 IRsend irsend; // the IR transmit pin is 11, also requires a 50-150 ohm resistor
