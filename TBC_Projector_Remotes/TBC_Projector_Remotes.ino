@@ -1,7 +1,7 @@
 #include <IRremote.h>
 #include <Bounce.h>
 
-IRsend irsend; // the IR transmit pin is 10, also requires a 1k resistor
+IRsend irsend; // the IR transmit pin is 11, also requires a 50-150 ohm resistor
 const int button1 = 8; //The power button on this pin and ground
 const int button2 = 9; //The NoShow button on this pin and ground
 const int led1 = 14; //The LED inside the glowing power button
