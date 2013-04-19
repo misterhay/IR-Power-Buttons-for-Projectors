@@ -2,6 +2,7 @@
 /* you need to comment out two lines in energia\hardware\msp430\libraries\IRremote\IRremote.cpp:
 //  pinMode(TIMER_PWM_PIN, OUTPUT);
 //  digitalWrite(TIMER_PWM_PIN, LOW); // When not sending PWM, we want it low
+*/
 
 #include <Bounce.h>
 
@@ -14,8 +15,8 @@ const int led2 = 2; //The red status LED
 int brightness = 30; //variables for the LED inside the button
 int fadeamount = 1;
 
-Bounce bouncer1 = Bounce(button1, 10); // 10 ms debounce
-Bounce bouncer2 = Bounce(button2, 10);
+Bounce bouncer1 = Bounce(button1, 20); // 20 millisecond debounce
+Bounce bouncer2 = Bounce(button2, 20);
 
 void setup() {
   pinMode(button1,INPUT_PULLUP);
@@ -36,16 +37,18 @@ void loop() {
      irsend.sendNEC(0xCF300FF, 32); // send Sanyo power button pressed
      delay(100);
      irsend.sendNEC(0xC73FF00, 32); // send Sanyo power button released
+   digitalWrite(P2_3, LOW); // turn off the IR LED when not transmitting
      delay(1000); // wait for a second
  }
  else if (bouncer2.read() == 0) {
      analogWrite(led1, 0); // turn off the led so we know something is happening
      digitalWrite(led2, HIGH); // turn on the red status LED so we know something is happening
      irsend.sendNEC(0xCF3D12E, 32); // send Sanyo AV Mute (no show) command
+   digitalWrite(P2_3, LOW); // turn off the IR LED when not transmitting
      delay(1000); // wait for a second
  }
  else {
-     digitalWrite(led2, LOW); // turn the red status LED back off
+   digitalWrite(led2, LOW); // turn the red status LED back off
      //pulse the LED inside the button 
      analogWrite(led1, brightness);
      brightness = brightness + fadeamount;
