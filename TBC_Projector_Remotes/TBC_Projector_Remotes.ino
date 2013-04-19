@@ -37,7 +37,7 @@ void loop() {
  else if (bouncer2.read() == 0) {
      analogWrite(led1, 0); // turn off the led so we know something is happening
      digitalWrite(led2, HIGH); // turn on the red status LED so we know something is happening
-     irsend.sendNEC(0xCF38BFF, 32); // send Sanyo AV Mute (no show) command
+     irsend.sendNEC(0xCF3D12E, 32); // send Sanyo AV Mute (no show) command
      delay(1000); // wait for a second
  }
  else {
