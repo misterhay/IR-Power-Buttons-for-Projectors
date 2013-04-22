@@ -23,6 +23,8 @@ void setup() {
   pinMode(button2,INPUT_PULLUP);
   pinMode(led1,OUTPUT);
   pinMode(led2,OUTPUT);
+  bouncer1.write(0);  // set the button pressed state as false so we don't turn on the projectors right awa
+  bouncer2.write(0);
 }
 
 void loop() {
