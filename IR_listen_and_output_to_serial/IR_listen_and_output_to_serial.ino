@@ -1,6 +1,9 @@
 #include <IRremote.h>
 
-const int RECV_PIN = 6;
+// when looking at the black part from left to right:
+// output, ground, vcc (5V)
+
+const int RECV_PIN = 6; //P1_4
 
 IRrecv irrecv(RECV_PIN);
 
