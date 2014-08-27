@@ -1,7 +1,7 @@
 #include <IRremote.h>
 
 // when looking at the black part from left to right:
-// output, ground, vcc (5V)
+// output, ground, VCC (5V, from TP1)
 
 const int RECV_PIN = 6; //P1_4
 
