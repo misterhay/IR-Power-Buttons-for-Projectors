@@ -1,30 +1,23 @@
 #include <IRremote.h>
-/* you need to comment out two lines in energia\hardware\msp430\libraries\IRremote\IRremote.cpp:
+/* you may need to comment out two lines in energia\hardware\msp430\libraries\IRremote\IRremote.cpp:
 //  pinMode(TIMER_PWM_PIN, OUTPUT);
 //  digitalWrite(TIMER_PWM_PIN, LOW); // When not sending PWM, we want it low
 */
 
-#include <Bounce.h>
-
 IRsend irsend; // the IR transmit pin is 11, also requires a 50-150 ohm resistor
 const int powerButton = 5; //The power button on this pin and ground
 const int inputButton = 6; //The input button on this pin and ground
-const int led1 = 14; //The "breathing" LED
-const int led2 = 2; //The red status LED
+const int led1 = 14; //The heartbeat LED
+const int led2 = 2; //The transmission status LED
 
-int brightness = 30; //variables for the "breathing" LED
-int fadeamount = 1;
-
-Bounce bouncer1 = Bounce(powerButton, 20); // 20 millisecond debounce
-Bounce bouncer2 = Bounce(inputButton, 20);
+int brightness = 30; //variables for the heartbeat LED
+int fadeamount = 5;
 
 void setup() {
   pinMode(powerButton,INPUT_PULLUP);
   pinMode(inputButton,INPUT_PULLUP);
   pinMode(led1,OUTPUT);
   pinMode(led2,OUTPUT);
-  bouncer1.write(1);  // set the button pressed state as false so we don't turn on the projectors right away
-  bouncer2.write(1);
 }
 
 void sendIR(int buttonPressed) {
@@ -36,18 +29,16 @@ void sendIR(int buttonPressed) {
  delay(1000); // wait for a second
 }
 
-void ledBreathe() {
+void heartbeat() {
  digitalWrite(led2, LOW); // turn the red status LED off
  analogWrite(led1, brightness);
  brightness = brightness + fadeamount;
  if (brightness == 30 || brightness == 255) {fadeamount = -fadeamount;}
- delay(20);
+ delay(5);
 }
 
 void loop() {
- bouncer1.update ( );  // Update the debouncer
- bouncer2.update ( );
- if (bouncer1.read() == 0) {sendIR(1);}
- else if (bouncer2.read() == 0) {sendIR(2);}
- else {ledBreathe();}
+ if (digitalRead(powerButton) == LOW) {sendIR(1);}
+ else if (digitalRead(inputButton) == LOW) {sendIR(2);}
+ else {heartbeat();}
 }
