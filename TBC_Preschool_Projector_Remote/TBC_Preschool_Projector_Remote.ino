@@ -1,5 +1,5 @@
 #include <IRremote.h>
-/* you may need to comment out two lines in energia\hardware\msp430\libraries\IRremote\IRremote.cpp:
+/* you need to comment out two lines in energia\hardware\msp430\libraries\IRremote\IRremote.cpp:
 //  pinMode(TIMER_PWM_PIN, OUTPUT);
 //  digitalWrite(TIMER_PWM_PIN, LOW); // When not sending PWM, we want it low
 */
@@ -20,15 +20,6 @@ void setup() {
   pinMode(led2,OUTPUT);
 }
 
-void sendIR(int buttonPressed) {
- analogWrite(led1, 0); // turn off the led so we know something is happening
- digitalWrite(led2, HIGH); // turn on the red status LED so we know something is happening
- if (buttonPressed == 1) {irsend.sendNEC(0xCF318E7, 32);} // send the power button signal
- if (buttonPressed == 2) {irsend.sendNEC(0xCF310EF, 32);} // send the input button signal
- digitalWrite(P2_3, LOW); // turn off the IR LED when not transmitting
- delay(1000); // wait for a second
-}
-
 void heartbeat() {
  digitalWrite(led2, LOW); // turn the red status LED off
  analogWrite(led1, brightness);
@@ -38,7 +29,7 @@ void heartbeat() {
 }
 
 void loop() {
- if (digitalRead(powerButton) == LOW) {sendIR(1);}
- else if (digitalRead(inputButton) == LOW) {sendIR(2);}
+ if (digitalRead(powerButton) == LOW) {irsend.sendNEC(0xCF318E7, 32);}//sendIR(1);}
+ else if (digitalRead(inputButton) == LOW) {irsend.sendNEC(0xCF310EF, 32);}
  else {heartbeat();}
 }
